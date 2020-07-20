@@ -13,7 +13,7 @@ trait AssertsTrait
 {
     public function assertExpectedArrayDiff(array $array1, array $array2, array $expects = []): void
     {
-        $diff = array_udiff($array1, $array2, function ($value1, $value2) {
+        $diff = array_udiff($array2, $array1, function ($value1, $value2) {
             return $value1 !== $value2;
         });
 

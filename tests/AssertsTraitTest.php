@@ -34,10 +34,10 @@ testCase('AssertsTraitTest.php', function () {
 
         testCase(function () {
             setUp(function () {
-                $this->array1 = ['db' => []];
-                $this->array2 = [];
+                $this->array1 = [];
+                $this->array2 = ['db' => []];
 
-                $this->expects = $this->array1;
+                $this->expects = $this->array2;
 
                 $this->exceptionMessage = <<<MSG
                 Unexpected Array Diff:
@@ -49,5 +49,23 @@ testCase('AssertsTraitTest.php', function () {
 
             useMacro('tests');
         });
+
+        // testCase(function () {
+        //     setUp(function () {
+        //         $this->array1 = ['db' => []];
+        //         $this->array2 = ['db' => [1, 2, 3]];
+
+        //         $this->expects = $this->array2;
+
+        //         $this->exceptionMessage = <<<MSG
+        //         Unexpected Array Diff:
+        //         [
+        //             'db' => []
+        //         ]
+        //         MSG;
+        //     });
+
+        //     useMacro('tests');
+        // });
     });
 });
