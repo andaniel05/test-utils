@@ -11,19 +11,25 @@ use Brick\VarExporter\VarExporter;
  */
 trait AssertsTrait
 {
-    public function assertExpectedArrayDiff(array $array1, array $array2, array $expects): void
+    public function assertExpectedArrayDiff(array $array1, array $array2, array $expects = []): void
     {
         $diff = array_udiff($array1, $array2, function ($value1, $value2) {
             return $value1 !== $value2;
         });
 
+        foreach ($expects as $key => $value) {
+            if ($diff[$key] === $value) {
+                unset($diff[$key]);
+            }
+        }
+
         if (empty($diff)) {
             $this->assertTrue(true);
             return;
-        } else {
-            $message = "\nUnexpected Array Diff:\n".VarExporter::export($diff);
-            fwrite(STDERR, $message);
-            throw new AssertionFailedError;
         }
+
+        throw new AssertionFailedError(
+            "\nUnexpected Array Diff:\n".VarExporter::export($diff)
+        );
     }
 }

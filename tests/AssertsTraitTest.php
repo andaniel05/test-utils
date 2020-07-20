@@ -15,21 +15,39 @@ testCase('AssertsTraitTest.php', function () {
                 $array1 = ['db' => []];
                 $array2 = $array1;
 
-                $this->assertExpectedArrayDiff($array1, $array2, []);
+                $this->assertExpectedArrayDiff($array1, $array2);
             });
         });
 
-        testCase('fail', function () {
-            setUp(function () {
+        createMacro('tests', function () {
+            test('fail', function () {
                 $this->expectException(AssertionFailedError::class);
+                $this->expectExceptionMessage($this->exceptionMessage);
+
+                $this->assertExpectedArrayDiff($this->array1, $this->array2);
             });
 
-            test(function () {
-                $array1 = ['db' => []];
-                $array2 = [];
-
-                $this->assertExpectedArrayDiff($array1, $array2, []);
+            test('pass', function () {
+                $this->assertExpectedArrayDiff($this->array1, $this->array2, $this->expects);
             });
+        });
+
+        testCase(function () {
+            setUp(function () {
+                $this->array1 = ['db' => []];
+                $this->array2 = [];
+
+                $this->expects = $this->array1;
+
+                $this->exceptionMessage = <<<MSG
+                Unexpected Array Diff:
+                [
+                    'db' => []
+                ]
+                MSG;
+            });
+
+            useMacro('tests');
         });
     });
 });
