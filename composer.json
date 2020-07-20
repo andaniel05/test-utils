@@ -1,0 +1,20 @@
+{
+    "name": "andaniel05/test-utils",
+    "license": "Propietary",
+    "authors": [
+        {
+            "name": "Andy Daniel Navarro Taño",
+            "email": "andaniel05@gmail.com"
+        }
+    ],
+    "require": {
+        "phpunit/phpunit": "7.5",
+        "thenlabs/pyramidal-tests": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Andaniel05\\TestUtils\\": "src/",
+            "Andaniel05\\TestUtils\\Tests\\": "tests/"
+        }
+    }
+}
