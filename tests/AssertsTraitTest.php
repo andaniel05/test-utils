@@ -50,22 +50,26 @@ testCase('AssertsTraitTest.php', function () {
             useMacro('tests');
         });
 
-        // testCase(function () {
-        //     setUp(function () {
-        //         $this->array1 = ['db' => []];
-        //         $this->array2 = ['db' => [1, 2, 3]];
+        testCase(function () {
+            setUp(function () {
+                $this->array1 = ['db' => []];
+                $this->array2 = ['db' => [1, 2, 3]];
 
-        //         $this->expects = $this->array2;
+                $this->expects = $this->array2;
 
-        //         $this->exceptionMessage = <<<MSG
-        //         Unexpected Array Diff:
-        //         [
-        //             'db' => []
-        //         ]
-        //         MSG;
-        //     });
+                $this->exceptionMessage = <<<MSG
+                Unexpected Array Diff:
+                [
+                    'db' => [
+                        1,
+                        2,
+                        3
+                    ]
+                ]
+                MSG;
+            });
 
-        //     useMacro('tests');
-        // });
+            useMacro('tests');
+        });
     });
 });
