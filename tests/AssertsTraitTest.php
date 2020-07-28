@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Andaniel05\TestUtils\Tests;
 
+use PHPUnit\Framework\AssertionFailedError;
+
 setTestCaseNamespace(__NAMESPACE__);
 setTestCaseClass(TestCase::class);
 
@@ -66,6 +68,30 @@ testCase('AssertsTraitTest.php', function () {
                 ];
 
                 $this->assertExpectedArrayDiff($array1, $array2, $expects);
+            });
+        });
+
+        testCase('fail', function () {
+            setUp(function () {
+                $this->expectException(AssertionFailedError::class);
+            });
+
+            tearDown(function () {
+                $this->expectExceptionMessage($this->exceptionMessage);
+            });
+
+            test(function () {
+                $array1 = [];
+                $array2 = ['db' => []];
+
+                $this->exceptionMessage = <<<MSG
+                Unexpected Array Diff:
+                [
+                    'db' => []
+                ]
+                MSG;
+
+                $this->assertExpectedArrayDiff($array1, $array2);
             });
         });
     });
