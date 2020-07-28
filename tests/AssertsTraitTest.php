@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Andaniel05\TestUtils\Tests;
 
-use PHPUnit\Framework\AssertionFailedError;
-
 setTestCaseNamespace(__NAMESPACE__);
 setTestCaseClass(TestCase::class);
 
@@ -17,59 +15,58 @@ testCase('AssertsTraitTest.php', function () {
 
                 $this->assertExpectedArrayDiff($array1, $array2);
             });
-        });
 
-        createMacro('tests', function () {
-            test('fail', function () {
-                $this->expectException(AssertionFailedError::class);
-                $this->expectExceptionMessage($this->exceptionMessage);
+            test(function () {
+                $array1 = [];
+                $array2 = ['db' => []];
 
-                $this->assertExpectedArrayDiff($this->array1, $this->array2);
+                $expects = ['db' => []];
+
+                $this->assertExpectedArrayDiff($array1, $array2, $expects);
             });
 
-            test('pass', function () {
-                $this->assertExpectedArrayDiff($this->array1, $this->array2, $this->expects);
-            });
-        });
+            test(function () {
+                $array1 = [];
+                $array2 = ['db' => []];
 
-        testCase(function () {
-            setUp(function () {
-                $this->array1 = [];
-                $this->array2 = ['db' => []];
+                $expects = ['db' => $this->equalTo([])];
 
-                $this->expects = $this->array2;
-
-                $this->exceptionMessage = <<<MSG
-                Unexpected Array Diff:
-                [
-                    'db' => []
-                ]
-                MSG;
+                $this->assertExpectedArrayDiff($array1, $array2, $expects);
             });
 
-            useMacro('tests');
-        });
+            test(function () {
+                $array1 = [];
+                $array2 = ['db' => []];
 
-        testCase(function () {
-            setUp(function () {
-                $this->array1 = ['db' => []];
-                $this->array2 = ['db' => [1, 2, 3]];
+                $expects = ['db' => function () {
+                    return true;
+                }];
 
-                $this->expects = $this->array2;
+                $this->assertExpectedArrayDiff($array1, $array2, $expects);
+            });
 
-                $this->exceptionMessage = <<<MSG
-                Unexpected Array Diff:
-                [
+            test(function () {
+                $array1 = [
                     'db' => [
-                        1,
-                        2,
-                        3
-                    ]
-                ]
-                MSG;
-            });
+                        'table1' => [
+                            ['id' => 0, 'col1' => 'val1', 'col2' => uniqid()],
+                        ],
+                    ],
+                ];
 
-            useMacro('tests');
+                $array2 = $array1;
+                $array2['db']['table1'][0]['col1'] = 'val2';
+
+                $expects = [
+                    'db' => [
+                        'table1' => [
+                            ['col1' => $this->equalTo('val2')],
+                        ],
+                    ],
+                ];
+
+                $this->assertExpectedArrayDiff($array1, $array2, $expects);
+            });
         });
     });
 });
