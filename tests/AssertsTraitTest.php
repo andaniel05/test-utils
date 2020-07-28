@@ -10,6 +10,32 @@ setTestCaseClass(TestCase::class);
 
 testCase('AssertsTraitTest.php', function () {
     testCase('#assertExpectedArrayDiff()', function () {
+        testCase('fail', function () {
+            setUp(function () {
+                $this->expectException(AssertionFailedError::class);
+            });
+
+            test(function () {
+                $array1 = [];
+                $array2 = ['db' => [1, 2, 3]];
+
+                $exceptionMessage = <<<MSG
+                Unexpected Array Diff:
+                [
+                    'db' => [
+                        1,
+                        2,
+                        3
+                    ]
+                ]
+                MSG;
+
+                $this->expectExceptionMessage($exceptionMessage);
+
+                $this->assertExpectedArrayDiff($array1, $array2);
+            });
+        });
+
         testCase('pass', function () {
             test(function () {
                 $array1 = ['db' => []];
@@ -68,30 +94,6 @@ testCase('AssertsTraitTest.php', function () {
                 ];
 
                 $this->assertExpectedArrayDiff($array1, $array2, $expects);
-            });
-        });
-
-        testCase('fail', function () {
-            setUp(function () {
-                $this->expectException(AssertionFailedError::class);
-            });
-
-            tearDown(function () {
-                $this->expectExceptionMessage($this->exceptionMessage);
-            });
-
-            test(function () {
-                $array1 = [];
-                $array2 = ['db' => []];
-
-                $this->exceptionMessage = <<<MSG
-                Unexpected Array Diff:
-                [
-                    'db' => []
-                ]
-                MSG;
-
-                $this->assertExpectedArrayDiff($array1, $array2);
             });
         });
     });
