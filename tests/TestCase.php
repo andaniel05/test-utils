@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Andaniel05\TestUtils\Tests;
 
 use Andaniel05\TestUtils\AssertsTrait;
+use ThenLabs\PyramidalTests\Utils\StaticVarsInjectionTrait;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
 /**
@@ -12,4 +13,10 @@ use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 class TestCase extends PHPUnitTestCase
 {
     use AssertsTrait;
+    use StaticVarsInjectionTrait;
+
+    public function setUp()
+    {
+        $this->injectVars();
+    }
 }
