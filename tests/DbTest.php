@@ -21,6 +21,10 @@ testCase('DbTest.php', function () {
         static::setVar('dbFileName', $dbFileName);
     });
 
+    setUp(function () {
+        $this->pdo = new PDO('sqlite:'.$this->dbFileName);
+    });
+
     tearDownAfterClass(function () {
         $dbFileName = static::getVar('dbFileName');
         unlink($dbFileName);
@@ -28,15 +32,34 @@ testCase('DbTest.php', function () {
 
     testCase('#getTables()', function () {
         test(function () {
-            $pdo = new PDO('sqlite:'.$this->dbFileName);
-
             $expected = [
                 'sqlite_sequence',
                 'animals',
                 'persons',
             ];
 
-            $this->assertEquals($expected, Db::getTables($pdo));
+            $this->assertEquals($expected, Db::getTables($this->pdo));
+        });
+    });
+
+    testCase('#getAllData()', function () {
+        test(function () {
+            $expected = [
+                'sqlite_sequence' => [
+                    ['name' => 'persons', 'seq' => '2'],
+                    ['name' => 'animals', 'seq' => '2'],
+                ],
+                'animals' => [
+                    ['id' => '1', 'name' => 'dog'],
+                    ['id' => '2', 'name' => 'cat'],
+                ],
+                'persons' => [
+                    ['id' => '1', 'name' => 'Andy Navarro', 'age' => '31'],
+                    ['id' => '2', 'name' => 'Daniel Tano',  'age' => '32'],
+                ],
+            ];
+
+            $this->assertEquals($expected, Db::getAllData($this->pdo));
         });
     });
 });
