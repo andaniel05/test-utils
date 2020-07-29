@@ -4,12 +4,25 @@ declare(strict_types=1);
 namespace Andaniel05\TestUtils\Tests;
 
 use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\ExpectationFailedException;
 
 setTestCaseNamespace(__NAMESPACE__);
 setTestCaseClass(TestCase::class);
 
 testCase('AssertsTraitTest.php', function () {
     testCase('#assertExpectedArrayDiff()', function () {
+        test(function () {
+            $this->expectException(ExpectationFailedException::class);
+            $this->expectExceptionMessage("The difference has not the data 'db1'.");
+
+            $array1 = [];
+            $array2 = ['db' => [1, 2, 3]];
+
+            $expects = ['db1' => []];
+
+            $this->assertExpectedArrayDiff($array1, $array2, $expects);
+        });
+
         testCase('fail', function () {
             setUp(function () {
                 $this->expectException(AssertionFailedError::class);

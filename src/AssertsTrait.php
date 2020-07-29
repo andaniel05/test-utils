@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace Andaniel05\TestUtils;
 
 use PHPUnit\Framework\AssertionFailedError;
-use Brick\VarExporter\VarExporter;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\Constraint\Constraint;
+use Brick\VarExporter\VarExporter;
 
 /**
  * @author Andy Daniel Navarro Taño <andaniel05@gmail.com>
@@ -18,6 +19,10 @@ trait AssertsTrait
 
         $callback = function (array $inputArray, array &$diff) use (&$callback) {
             foreach ($inputArray as $key => $value) {
+                if (! array_key_exists($key, $diff)) {
+                    throw new ExpectationFailedException("The difference has not the data '{$key}'.");
+                }
+
                 if (is_array($value)) {
                     $callback($value, $diff[$key]);
 
