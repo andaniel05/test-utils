@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Andaniel05\TestUtils;
 
 use PDO;
+use PDOStatement;
 
 /**
  * @author Andy Daniel Navarro Taño <andaniel05@gmail.com>
@@ -11,10 +12,18 @@ use PDO;
  */
 abstract class Db
 {
-    public static function showTables(PDO $pdo): array
+    public static function getTables(PDO $pdo): array
     {
-        $query = $pdo->query('SHOW TABLES');
+        $result = [];
 
-        return $query->fetchAll();
+        $query = $pdo->query("SELECT name FROM sqlite_master WHERE type = 'table'");
+
+        if ($query instanceof PDOStatement) {
+            foreach ($query as $row) {
+                $result[] = $row['name'];
+            }
+        }
+
+        return $result;
     }
 }

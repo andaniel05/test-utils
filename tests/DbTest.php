@@ -26,13 +26,17 @@ testCase('DbTest.php', function () {
         unlink($dbFileName);
     });
 
-    testCase('#showTables()', function () {
+    testCase('#getTables()', function () {
         test(function () {
             $pdo = new PDO('sqlite:'.$this->dbFileName);
 
-            $expected = [];
+            $expected = [
+                'sqlite_sequence',
+                'animals',
+                'persons',
+            ];
 
-            $this->assertEquals($expected, Db::showTables($pdo));
+            $this->assertEquals($expected, Db::getTables($pdo));
         });
     });
 });
