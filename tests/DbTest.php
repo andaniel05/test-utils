@@ -46,16 +46,16 @@ testCase('DbTest.php', function () {
         test(function () {
             $expected = [
                 'sqlite_sequence' => [
-                    ['name' => 'persons', 'seq' => '2'],
-                    ['name' => 'animals', 'seq' => '2'],
+                    ['name' => 'persons', 'seq' => 2],
+                    ['name' => 'animals', 'seq' => 2],
                 ],
                 'animals' => [
-                    ['id' => '1', 'name' => 'dog'],
-                    ['id' => '2', 'name' => 'cat'],
+                    ['id' => 1, 'name' => 'dog'],
+                    ['id' => 2, 'name' => 'cat'],
                 ],
                 'persons' => [
-                    ['id' => '1', 'name' => 'Andy Navarro', 'age' => '31'],
-                    ['id' => '2', 'name' => 'Daniel Tano',  'age' => '32'],
+                    ['id' => 1, 'name' => 'Andy Navarro', 'age' => 31],
+                    ['id' => 2, 'name' => 'Daniel Tano',  'age' => 32],
                 ],
             ];
 
