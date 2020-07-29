@@ -9,7 +9,8 @@
     ],
     "require": {
         "thenlabs/pyramidal-tests": "^1.1",
-        "brick/varexporter": "^0.3.2"
+        "brick/varexporter": "^0.3.2",
+        "vlucas/phpdotenv": "^5.1"
     },
     "autoload": {
         "psr-4": {

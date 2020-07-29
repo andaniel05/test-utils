@@ -16,19 +16,30 @@ abstract class Db
     public static function getTables(PDO $pdo): array
     {
         $result = [];
-        $sql = 'SHOW TABLES';
 
         $driverName = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
-        if ($driverName == 'sqlite') {
-            $sql = "SELECT name FROM sqlite_master WHERE type = 'table'";
-        }
+        switch ($driverName) {
+            case 'sqlite':
+                $sql = "SELECT name FROM sqlite_master WHERE type = 'table'";
+                $query = $pdo->query($sql);
 
-        $query = $pdo->query($sql);
+                if ($query instanceof PDOStatement) {
+                    foreach ($query as $row) {
+                        $result[] = $row['name'];
+                    }
+                }
+                break;
 
-        if ($query instanceof PDOStatement) {
-            foreach ($query as $row) {
-                $result[] = $row['name'];
-            }
+            default:
+                $sql = 'SHOW TABLES';
+                $query = $pdo->query($sql);
+
+                if ($query instanceof PDOStatement) {
+                    foreach ($query as $row) {
+                        $result[] = $row[0];
+                    }
+                }
+                break;
         }
 
         return $result;
