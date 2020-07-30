@@ -48,6 +48,17 @@ testCase('DbTest.php', function () {
 
                 $this->assertEquals($expected, Db::getAllData($this->db));
             });
+
+            test('#truncateAllTables()', function () {
+                Db::truncateAllTables($this->db);
+
+                $expected = [
+                    'country' => [],
+                    'user' => [],
+                ];
+
+                $this->assertEquals($expected, Db::getAllData($this->db));
+            });
         });
     });
 

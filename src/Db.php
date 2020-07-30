@@ -58,4 +58,18 @@ abstract class Db
 
         return $result;
     }
+
+    public static function truncateAllTables(PDO $db): void
+    {
+        $tables = self::getTables($db);
+        $sql = 'SET FOREIGN_KEY_CHECKS=0;';
+
+        foreach ($tables as $tableName) {
+            $sql .= "TRUNCATE TABLE {$tableName};";
+        }
+
+        $sql .= 'SET FOREIGN_KEY_CHECKS=1;';
+
+        $db->exec($sql);
+    }
 }
