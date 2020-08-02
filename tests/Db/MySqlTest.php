@@ -31,6 +31,61 @@ testCase('MySqlTest.php', function () {
         });
     });
 
+    testCase('#getSchema()', function () {
+        test(function () {
+            $expected = [
+                'country' => [
+                    [
+                        'Field' => 'id',
+                        'Type' => 'int(11)',
+                        'Null' => 'NO',
+                        'Key' => 'PRI',
+                        'Default' => null,
+                        'Extra' => 'auto_increment'
+                    ],
+                    [
+                        'Field' => 'code',
+                        'Type' => 'varchar(45)',
+                        'Null' => 'NO',
+                        'Key' => 'UNI',
+                        'Default' => null,
+                        'Extra' => ''
+                    ]
+                ],
+                'user' => [
+                    [
+                        'Field' => 'id',
+                        'Type' => 'int(11)',
+                        'Null' => 'NO',
+                        'Key' => 'PRI',
+                        'Default' => null,
+                        'Extra' => 'auto_increment'
+                    ],
+                    [
+                        'Field' => 'username',
+                        'Type' => 'varchar(45)',
+                        'Null' => 'NO',
+                        'Key' => 'UNI',
+                        'Default' => null,
+                        'Extra' => ''
+                    ],
+                    [
+                        'Field' => 'country_id',
+                        'Type' => 'int(11)',
+                        'Null' => 'YES',
+                        'Key' => '',
+                        'Default' => null,
+                        'Extra' => ''
+                    ]
+                ]
+            ];
+
+            $schema = MySql::getSchema($this->db);
+
+            $this->assertExpectedArrayDiff($expected, $schema);
+        });
+    });
+
     testCase('#getAllData()', function () {
         test(function () {
             $expected = [

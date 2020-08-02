@@ -8,9 +8,9 @@ use PDOStatement;
 
 /**
  * @author Andy Daniel Navarro Taño <andaniel05@gmail.com>
- * @abstract
+ * @final
  */
-abstract class MySql implements DbInterface
+final class MySql implements DbInterface
 {
     public static function getTables(PDO $pdo): array
     {
@@ -54,5 +54,19 @@ abstract class MySql implements DbInterface
         $sql .= 'SET FOREIGN_KEY_CHECKS=1;';
 
         $db->exec($sql);
+    }
+
+    public static function getSchema(PDO $db): array
+    {
+        $result = [];
+
+        $tables = self::getTables($db);
+        foreach ($tables as $tableName) {
+            $sql = "DESCRIBE {$tableName}";
+            $query = $db->query($sql);
+            $result[$tableName] = $query->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        return $result;
     }
 }

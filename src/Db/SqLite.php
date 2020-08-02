@@ -8,9 +8,9 @@ use PDOStatement;
 
 /**
  * @author Andy Daniel Navarro Taño <andaniel05@gmail.com>
- * @abstract
+ * @final
  */
-abstract class SqLite implements DbInterface
+final class SqLite implements DbInterface
 {
     public static function getTables(PDO $pdo): array
     {
@@ -54,5 +54,12 @@ abstract class SqLite implements DbInterface
         $sql .= 'SET FOREIGN_KEY_CHECKS=1;';
 
         $db->exec($sql);
+    }
+
+    public static function getSchema(PDO $db): array
+    {
+        // TODO
+
+        return [];
     }
 }

@@ -15,4 +15,6 @@ interface DbInterface
     public static function getAllData(PDO $db): array;
 
     public static function truncateAllTables(PDO $db): void;
+
+    public static function getSchema(PDO $db): array;
 }
