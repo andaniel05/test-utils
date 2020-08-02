@@ -3,4 +3,4 @@ vendor/
 !.editorconfig
 !.gitignore
 !.php_cs.dist
-tests/db-*.sqlite
+tests/Db/db-*.sqlite

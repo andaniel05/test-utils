@@ -1,45 +1,28 @@
 <?php
 declare(strict_types=1);
 
-namespace Andaniel05\TestUtils;
+namespace Andaniel05\TestUtils\Db;
 
 use PDO;
 use PDOStatement;
-use Brick\VarExporter\VarExporter;
 
 /**
  * @author Andy Daniel Navarro Taño <andaniel05@gmail.com>
  * @abstract
  */
-abstract class Db
+abstract class MySql implements DbInterface
 {
     public static function getTables(PDO $pdo): array
     {
         $result = [];
 
-        $driverName = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
-        switch ($driverName) {
-            case 'sqlite':
-                $sql = "SELECT name FROM sqlite_master WHERE type = 'table'";
-                $query = $pdo->query($sql);
+        $sql = 'SHOW TABLES';
+        $query = $pdo->query($sql);
 
-                if ($query instanceof PDOStatement) {
-                    foreach ($query as $row) {
-                        $result[] = $row['name'];
-                    }
-                }
-                break;
-
-            default:
-                $sql = 'SHOW TABLES';
-                $query = $pdo->query($sql);
-
-                if ($query instanceof PDOStatement) {
-                    foreach ($query as $row) {
-                        $result[] = $row[0];
-                    }
-                }
-                break;
+        if ($query instanceof PDOStatement) {
+            foreach ($query as $row) {
+                $result[] = $row[0];
+            }
         }
 
         return $result;
