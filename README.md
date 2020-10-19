@@ -8,7 +8,7 @@ Utils for PHP testing.
 Create an `.env` file with the next values:
 
 ```
-MYSQL_DSN="mysql:host=localhost;dbname=database"
+MYSQL_DSN="mysql:host=localhost;dbname=andaniel05_testutils"
 MYSQL_USER="root"
 MYSQL_PASS="root"
 ```

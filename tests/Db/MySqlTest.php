@@ -37,7 +37,7 @@ testCase('MySqlTest.php', function () {
                 'country' => [
                     [
                         'Field' => 'id',
-                        'Type' => 'int(11)',
+                        'Type' => 'int',
                         'Null' => 'NO',
                         'Key' => 'PRI',
                         'Default' => null,
@@ -55,7 +55,7 @@ testCase('MySqlTest.php', function () {
                 'user' => [
                     [
                         'Field' => 'id',
-                        'Type' => 'int(11)',
+                        'Type' => 'int',
                         'Null' => 'NO',
                         'Key' => 'PRI',
                         'Default' => null,
@@ -71,7 +71,7 @@ testCase('MySqlTest.php', function () {
                     ],
                     [
                         'Field' => 'country_id',
-                        'Type' => 'int(11)',
+                        'Type' => 'int',
                         'Null' => 'YES',
                         'Key' => '',
                         'Default' => null,

@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `andaniel05testing` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `andaniel05testing`;
 -- MySQL dump 10.13  Distrib 5.7.30, for Linux (x86_64)
 --
 -- Host: localhost    Database: andaniel05testing
