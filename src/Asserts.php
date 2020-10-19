@@ -19,6 +19,10 @@ abstract class Asserts
     {
         $diff = TestUtils::arrayRecursiveDiff($array2, $array1);
 
+        if (empty($diff)) {
+            $diff = TestUtils::arrayRecursiveDiff($array1, $array2);
+        }
+
         $callback = function (array $inputArray, array &$diff) use (&$callback) {
             foreach ($inputArray as $key => $value) {
                 if (! array_key_exists($key, $diff)) {

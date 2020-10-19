@@ -79,6 +79,15 @@ testCase('AssertsTraitTest.php', function () {
                 $array1 = [];
                 $array2 = ['db' => []];
 
+                $expects = ['db' => $this->equalTo([])];
+
+                $this->assertExpectedArrayDiff($array2, $array1, $expects);
+            });
+
+            test(function () {
+                $array1 = [];
+                $array2 = ['db' => []];
+
                 $expects = ['db' => function () {
                     return true;
                 }];
